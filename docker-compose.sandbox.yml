@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexus-sandbox-postgres
+    environment:
+      POSTGRES_USER: nexus
+      POSTGRES_PASSWORD: nexus_sandbox_password
+      POSTGRES_DB: nexus_sandbox
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexus"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: nexus-sandbox-redis
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Simulated homelab for chaos/eval testing
+  homelab-postgres:
+    image: postgres:16-alpine
+    container_name: nexus-sandbox-homelab-pg
+    environment:
+      POSTGRES_USER: immich
+      POSTGRES_PASSWORD: immich_password
+      POSTGRES_DB: immich
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U immich"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  homelab-redis:
+    image: redis:7-alpine
+    container_name: nexus-sandbox-homelab-redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
