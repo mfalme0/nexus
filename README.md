@@ -186,7 +186,11 @@ make lint        # ruff
 make typecheck   # mypy --strict
 ```
 
-`make dev`, `make migrate`, `make sandbox-up`, and `make eval` are also available.
+`make dev`, `make migrate`, and `make sandbox-up` are also available.
+
+The evaluation harness is a Phase 6 deliverable, so there is deliberately no `eval`
+target (#1 removed one that pointed at a module that never existed). An `eval`
+command that ran and reported nothing would be worse than no command at all.
 
 ---
 
