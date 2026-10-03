@@ -17,6 +17,8 @@ from nexus.tools.permissions import (
     PermissionPolicy,
 )
 
+pytestmark = pytest.mark.unit
+
 PERMISSIVE = ExecutionMode.PERMISSIVE
 READ_ONLY = ExecutionMode.READ_ONLY
 

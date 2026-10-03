@@ -19,6 +19,8 @@ from nexus.tools.permissions import (
     PermissionPolicy,
 )
 
+pytestmark = pytest.mark.unit
+
 PARAMS: dict[str, Any] = {
     "type": "object",
     "properties": {"container": {"type": "string"}, "grace_seconds": {"type": "integer"}},

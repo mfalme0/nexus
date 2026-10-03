@@ -23,6 +23,8 @@ from nexus.tools.evidence import Evidence, EvidenceStatus
 from nexus.tools.host import _parse_meminfo, host_tool_definitions, register_host_tools
 from nexus.tools.permissions import PermissionClass, PermissionPolicy
 
+pytestmark = pytest.mark.unit
+
 MEMINFO = """MemTotal:       16384000 kB
 MemFree:         2048000 kB
 MemAvailable:   12288000 kB
