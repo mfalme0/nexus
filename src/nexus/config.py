@@ -61,6 +61,20 @@ class LangfuseSettings(BaseSettings):
         return bool(self.public_key.get_secret_value() and self.secret_key.get_secret_value())
 
 
+class HostToolSettings(BaseSettings):
+    """Paths the read-only host probes read from.
+
+    Exposed as settings rather than constants so the probes can be pointed at a
+    sandbox or a fixture without editing code, and so a deployment on a platform
+    without `/proc` can configure a substitute instead of patching.
+    """
+
+    model_config = SettingsConfigDict(env_prefix="NEXUS_HOST_")
+
+    disk_path: str = "/"
+    meminfo_path: str = "/proc/meminfo"
+
+
 class NexusSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="NEXUS_", env_file=".env")
 
@@ -72,6 +86,7 @@ class NexusSettings(BaseSettings):
     database: DatabaseSettings = Field(default_factory=DatabaseSettings)
     redis: RedisSettings = Field(default_factory=RedisSettings)
     langfuse: LangfuseSettings = Field(default_factory=LangfuseSettings)
+    host_tools: HostToolSettings = Field(default_factory=HostToolSettings)
 
 
 settings = NexusSettings()

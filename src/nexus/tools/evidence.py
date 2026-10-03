@@ -51,10 +51,7 @@ class Evidence:
 
     @property
     def observed(self) -> bool:
-        return self.observed_flag
-
-    @property
-    def observed_flag(self) -> bool:
+        """True when the value came from the real system and may be cited as fact."""
         return self.status is EvidenceStatus.OBSERVED
 
     @property
