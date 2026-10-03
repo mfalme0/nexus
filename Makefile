@@ -1,4 +1,4 @@
-.PHONY: install dev test test-unit test-integration lint format typecheck migrate migrate-up migrate-autogen down sandbox-up sandbox-down compose-up clean
+.PHONY: install dev test test-unit lint format typecheck migrate migrate-up migrate-autogen down sandbox-up sandbox-down compose-up clean
 
 PYTHON ?= python
 
@@ -14,9 +14,6 @@ test:
 
 test-unit:
 	pytest -v -m unit tests
-
-test-integration:
-	pytest -v -m integration tests
 
 lint:
 	ruff check src tests alembic/env.py

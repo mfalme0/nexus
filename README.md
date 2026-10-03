@@ -82,18 +82,34 @@ Real, working, and verified against live PostgreSQL and Redis:
 - CI: ruff, mypy (`strict`), pytest against real PG + Redis services
 - Graceful degradation: the app boots and reports `degraded` when the DB is down
 
+### ✅ Phase 2 — Infrastructure discovery (complete)
+
+Real, read-only observation of the local host, with honest failure:
+
+- Typed tool layer (`nexus/tools/`) — every capability declares a permission class
+- **Allowlist** permission policy (`READ_ONLY` / `LOW_RISK` / `REQUIRES_APPROVAL` /
+  `FORBIDDEN`), enforced outside the LLM; a new policy denies everything
+- `FORBIDDEN` is evaluated first, so no mode or approval can reach it
+- Read-only host probes: disk usage, memory, OS, load average, CPU count
+- `Evidence` records carry an explicit `OBSERVED` / `UNAVAILABLE` status, so
+  *"I could not verify disk usage because the host did not respond"* is a result
+  the system can actually produce
+- Inventory endpoints: `GET /api/v1/inventory/host`, `GET /api/v1/tools`,
+  `POST /api/v1/tools/{tool_name}`
+- Approvals must be **issued**, never asserted — an HTTP caller cannot approve its
+  own action (see [ADR-0003](docs/decisions/0003-approval-authority.md))
+
 ### 🚧 Roadmap
 
-- [ ] **Phase 2** — Infrastructure discovery (hosts, Docker, services, topology)
-- [ ] **Phase 3** — Typed tool layer + permission policy
+- [ ] **Phase 3** — Safe remediation actions behind the approval gate
 - [ ] **Phase 4** — LangGraph agent (investigate → evidence → diagnose → explain)
 - [ ] **Phase 5** — Dynamic context engine
 - [ ] **Phase 6** — Evaluation framework (25+ scenarios, regression gates)
 - [ ] **Phase 7** — Observability (Langfuse tracing)
-- [ ] **Phase 8** — Safe remediation, approvals, audit, verification
+- [ ] **Phase 8** — Operator-facing approval flow + audit UI
 - [ ] **Phase 9** — Chaos lab (controlled failure scenarios)
 - [ ] **Phase 10** — Operations console (React/Next.js)
-- [ ] **Phase 11** — Hardening, security audit, regression testing
+- [ ] **Phase 11** — Hardening, API authentication, regression testing
 
 > Honest rule of this repo: features are marked `REAL`, `SIMULATED`, `MOCK`,
 > or `NOT IMPLEMENTED`. See [docs/architecture.md](docs/architecture.md).
@@ -236,9 +252,19 @@ docs/             # architecture and decision records
 
 - [Architecture](docs/architecture.md)
 - [ADR-0001: Phase 1 foundation](docs/decisions/0001-phase-1-foundation.md)
+- [ADR-0002: Tool permissions are an allowlist decided outside the model](docs/decisions/0002-tool-permission-policy.md)
+- [ADR-0003: Approvals must be issued, not asserted](docs/decisions/0003-approval-authority.md)
+- [Contributing](CONTRIBUTING.md) — including the honesty rules this repo follows
+- [Security policy](SECURITY.md) — threat model, and what is *not* defended yet
 
 More land as each phase completes: agent design, context engineering, tool
 security, evaluation, observability, failure analysis, and chaos engineering.
+
+## Contributing
+
+Issues and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+Security vulnerabilities should go through private advisory reporting, not a public
+issue: see [SECURITY.md](SECURITY.md).
 
 ---
 

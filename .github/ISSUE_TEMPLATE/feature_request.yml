@@ -1,0 +1,59 @@
+name: Feature or design discussion
+description: Propose a capability, or ask about how something should work
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For anything involving agent reasoning, tool safety, or approval flow, please
+        open a **Discussion** instead. Those decisions benefit from context that an
+        issue form does not collect well.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: |
+        What goes wrong today, or what is missing? Describe the situation rather
+        than the solution.
+      placeholder: |
+        When a service is unreachable, the agent reports disk usage as normal
+        because it never checked whether the probe succeeded.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What would you like to happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: roadmap
+    attributes:
+      label: Roadmap fit
+      description: |
+        NEXUS is built in phases. Which phase does this belong to, or does it need
+        a new one? See the roadmap in the README.
+      placeholder: Phase 3 (typed tool layer + permission policy)
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else could work, and why is this better?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety implications
+      description: Does this change what the agent is able to do?
+      options:
+        - label: This does not change tool permissions or approval flow.
+        - label: This changes tool permissions (please describe in the proposal).

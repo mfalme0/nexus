@@ -23,6 +23,8 @@ from nexus.tools.base import ToolDefinition, ToolRegistry
 from nexus.tools.host import register_host_tools
 from nexus.tools.permissions import ExecutionMode, PermissionClass, PermissionPolicy
 
+pytestmark = pytest.mark.unit
+
 MEMINFO = "MemTotal: 1024 kB\nMemAvailable: 256 kB\n"
 
 

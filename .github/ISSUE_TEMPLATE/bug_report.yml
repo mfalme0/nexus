@@ -1,0 +1,75 @@
+name: Bug report
+description: Something in NEXUS does not do what it says it does
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. If this is a **security** issue, do not file it here.
+        See [SECURITY.md](../blob/main/SECURITY.md) for private reporting.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you observe, and what did you expect instead?
+      placeholder: |
+        `make eval` printed "no module named nexus.eval.cli".
+        Expected: the command to run the evaluation harness.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: The shortest path from a clean checkout to the wrong behaviour.
+      render: shell
+      placeholder: |
+        1. docker compose up -d
+        2. pip install -e ".[dev]"
+        3. make eval
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: |
+        Paste logs, tracebacks, or command output. NEXUS cares about this more than
+        usual: a report that shows what was actually observed is far easier to act on.
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: NEXUS version or commit
+      placeholder: v0.1.0, or the output of `git rev-parse --short HEAD`
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      multiple: true
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Docker Compose sandbox
+        - Bare homelab host
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues for this.
+        - label: This is not a security vulnerability.
+        - label: I can reproduce it on a clean checkout.
