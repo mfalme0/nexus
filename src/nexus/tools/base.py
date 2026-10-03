@@ -153,6 +153,11 @@ class ToolExecutor:
     def __init__(self, registry: ToolRegistry) -> None:
         self._registry = registry
 
+    @property
+    def registry(self) -> ToolRegistry:
+        """The registry this executor enforces. Exposed for listing and discovery."""
+        return self._registry
+
     async def invoke(
         self,
         tool_name: str,
